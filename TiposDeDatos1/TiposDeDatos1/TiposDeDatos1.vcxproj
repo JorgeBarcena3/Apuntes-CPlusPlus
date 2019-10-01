@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClCompile Include="code\TiposDeDatos1.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code\Array.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{11CF03EF-DCF0-4943-8DBC-C20DD353416F}</ProjectGuid>
