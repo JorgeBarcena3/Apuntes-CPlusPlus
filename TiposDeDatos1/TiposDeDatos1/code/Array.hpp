@@ -60,7 +60,6 @@ public:
 
 template<class T>
 inline Array<T>::Array()
-
 {
 
     //Establecemos el tamaño y el buffer
