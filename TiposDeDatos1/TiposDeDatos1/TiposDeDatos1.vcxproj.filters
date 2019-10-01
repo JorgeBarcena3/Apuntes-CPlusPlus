@@ -23,5 +23,8 @@
     <ClInclude Include="code\Array.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="code\List.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

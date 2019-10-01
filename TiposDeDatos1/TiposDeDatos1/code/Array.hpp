@@ -83,9 +83,19 @@ template<class T>
 inline Array<T>::Array(const Array& other)
 {
 
-    //Establecemos el tamaño y el buffer
+    //1.- Establecemos el tamaño y el buffer
     size = other.get_size();
     primerElemento = new T[size];
+
+    //2.- Copiar los valores
+    T* ptr1 = primerElemento;
+    T* ptr2 = other.primerElemento;
+
+    for (size_t i = 0; i < size; i++)
+    {
+        *ptr1 = *ptr2;
+        ptr1++; ptr2++;
+    }
 
 
 };
@@ -230,7 +240,7 @@ inline void Array<T>::erase(size_t index)
     }
 
     //3.- Borrar el puntero anterior con delete
-    delete primerElemento;
+    delete [] primerElemento;
 
     //4.- Reapuntar el puntero
     primerElemento = nuevo_puntero;
