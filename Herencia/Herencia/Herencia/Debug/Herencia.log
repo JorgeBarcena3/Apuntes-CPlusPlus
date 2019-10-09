@@ -1,2 +1,6 @@
-﻿  Herencia.cpp
+﻿  Array.cpp
+  Herencia.cpp
+  integer.cpp
+  Generating Code...
+D:\ApuntesCpp\Apuntes-CPlusPlus\Herencia\Herencia\Herencia\code\Array.cpp(106): warning C4172:  returning address of local variable or temporary
   Herencia.vcxproj -> D:\ApuntesCpp\Apuntes-CPlusPlus\Herencia\Herencia\Debug\Herencia.exe

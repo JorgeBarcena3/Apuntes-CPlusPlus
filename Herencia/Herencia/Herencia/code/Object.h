@@ -21,5 +21,10 @@ public:
     */
     virtual bool less_than(const Object*) { return false; }
 
+    /** Destructor virtual de la clase Object
+    */
+    virtual ~Object() = default;
+
+
 };
 

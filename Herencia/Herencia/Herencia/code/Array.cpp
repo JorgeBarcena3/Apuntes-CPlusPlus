@@ -1,6 +1,7 @@
 #include "Array.h"
 #include <iostream>
 #include "integer.h"
+#include <cassert>
 
 
 Array::Array()
@@ -68,7 +69,7 @@ Object* Array::get(size_t index)
     return *(elements + count);
 }
 
-void Array::print()
+void Array::print() const
 {
     for (size_t i = 0; i < count; i++)
     {
@@ -91,13 +92,18 @@ Array& Array::operator=(const Array& a)
 
         for (size_t i = 0; i < a.count; i++)
         {
-            const Integer* value = dynamic_cast<const Integer*>(*(elements + i));
+            const Integer* value = dynamic_cast<const Integer*>(*(a.elements + i));
             push_back(new Integer(value->get()));
         }
 
     }
     return *this;
 
+}
+
+const Object * const & Array::operator[](size_t index) const
+{
+    return *(elements + index);
 }
 
 void Array::clear()
