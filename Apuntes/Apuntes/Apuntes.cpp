@@ -114,6 +114,28 @@ union Color32 {
 //delete a;
 
 #pragma endregion
+
+#pragma region Singleton
+
+class Singleton {
+
+private:
+
+    Singleton() = default;
+    Singleton(const Singleton&) = default;
+    ~Singleton() = default;
+
+public:
+
+    static Singleton& get_instance() {
+        static Singleton object;
+        return object;
+    }
+
+
+};
+#pragma endregion
+
 int main()
 {
 

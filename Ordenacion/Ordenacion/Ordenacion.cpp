@@ -7,7 +7,6 @@ using namespace std;
 
 namespace algoritmosDeOrdenacion {
 
-
     ///Algoritmo de burbuja
     ///Recorremos la lista de numeros comparando el numero actual con el siguiente, y si es el orden incorrecto los cambiamos
     ///Hasta que no cambiamos nada
@@ -129,6 +128,7 @@ namespace algoritmosDeOrdenacion {
         return list;
 
     }
+
     ///Necesita una lista de auxialr del tipo de dato
     ///Contamos cuantas veces aparece cada dato repetido
     ///Lista de igual tamaño
@@ -136,7 +136,7 @@ namespace algoritmosDeOrdenacion {
     //Recorremos la lista de conteo y la añadimos a la nueva lista
     template <class T>
     void countShort(T* list, size_t size) {
-
++
         T maxValue = list[0];
 
         for (size_t i = 1; i < size; i++)
