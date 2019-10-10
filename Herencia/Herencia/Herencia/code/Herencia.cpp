@@ -1,23 +1,13 @@
 #include <iostream>
 #include "integer.h"
 #include "Array.h"
+#include "Fixed16.h"
 
 int main()
 {
 
-    Array a;
-
-    a.push_back(new Integer(1)); 
-    a.push_back(new Integer(2));
-    a.push_back(new Integer(1));
-    a.push_back(new Integer(5));
-    a.push_back(new Integer(9));
-    a.push_back(new Integer(0));
-
-    for (Array::Iterator i = a.begin(); i != a.end(); ++i)
-    {
-        std::cout << (*i)->to_string() << std::endl;
-    }
+    Fixed16 f = Fixed16(8) / Fixed16(6);
+    int i = (int)f;
 
     
 }

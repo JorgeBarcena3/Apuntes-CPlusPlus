@@ -20,7 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\Array.h" />
+    <ClInclude Include="code\Fixed16.h" />
     <ClInclude Include="code\integer.h" />
+    <ClInclude Include="code\Math.h" />
     <ClInclude Include="code\Object.h" />
   </ItemGroup>
   <ItemGroup>

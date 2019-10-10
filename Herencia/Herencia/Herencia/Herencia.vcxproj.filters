@@ -24,6 +24,12 @@
     <ClInclude Include="code\Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="code\Fixed16.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Herencia.cpp">
