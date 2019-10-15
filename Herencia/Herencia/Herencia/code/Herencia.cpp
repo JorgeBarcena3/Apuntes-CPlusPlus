@@ -2,6 +2,7 @@
 #include "integer.h"
 #include "Array.h"
 #include "Fixed16.h"
+#include "Math.h"
 
 int main()
 {

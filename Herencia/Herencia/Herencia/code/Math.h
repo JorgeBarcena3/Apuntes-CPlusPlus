@@ -1,4 +1,25 @@
+// File: Math.h
+// Description : Cabecera que implementa las clases de vector2, vector3 y mat4...
+// Author: Jorge Bárcena Lumbreras
+
+// © Copyright (C) 2019  Jorge Bárcena Lumbreras
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//
+
 #include <iostream>
+
 
 /** Implementacion de la clase de Vector2 con sus respectivos operandos
 */
@@ -8,6 +29,7 @@ class vec2
 
 public:
     union {
+
         struct
         {
             T x;
@@ -18,9 +40,9 @@ public:
 
 public:
 
-    /** Implementacion del constructor por defecto
+    /** Implementacion del constructor por defecto (Suele estar vacio por defecto)
     */
-    inline vec2()
+    vec2()
     {
         x = 0;
         y = 0;
@@ -28,98 +50,154 @@ public:
 
     /** Implementacion del constructor con parametros
     */
-    inline vec2(T a_X, T a_Y) : x(a_X), y(a_Y){
+    vec2(T a_X, T a_Y) : x(a_X), y(a_Y) {
+    };
+
+    /** Implementacion del constructor con parametros
+    */
+    vec2(const vec2<T>& _a) : x(_a.x), y(_a.y) {
     };
 
     /** Operacion de igualacion
     */
-    inline vec2& operator=(const vec2& rhs) {
+    vec2& operator=(const vec2& vec) {
 
-        x = rhs.x;
-        y = rhs.y;
+        x = vec.x;
+        y = vec.y;
         return *this;
     };
 
     /** Operacion de suma
     */
-    inline vec2& operator+=(const vec2& a_Rhs) {
+    vec2& operator+=(const vec2& vec2) {
 
-        x += a_Rhs.x;
-        y += a_Rhs.y;
+        x += vec2.x;
+        y += vec2.y;
+        return *this;
+    };
+
+    /** Operacion de suma
+    */
+    template <class T>
+    vec2<T> operator+(const vec2<T> vec2) {
+
+        return vec2<T>(*this) -= vec2;
+    }
+
+    /** Operacion de resta
+    */
+    vec2& operator-=(const vec2& vec2) {
+
+
+        x += (-vec2.x);
+        y += (-vec2.y);
         return *this;
     };
 
     /** Operacion de resta
     */
-    inline vec2& operator-=(const vec2& a_Rhs) {
+    template <class T>
+    vec2<T>  operator-(const vec2<T>& vec2) {
 
-        x += (a_Rhs.x * -1);
-        y += (a_Rhs.y * -1);
+        return vec2<T>(*this) -= vec2;
+
+    };
+
+    /** Producto de un vector por un número
+    */
+    vec2& operator*=(T _num) {
+
+        x *= _num;
+        y *= _num;
         return *this;
     };
 
-    /** Operacion de multiplicacion
+    /** Operacion de Multiplicacion
     */
-    inline vec2& operator*=(T a_Rhs) {
+    template <class T>
+    vec2<T>  operator*(T _num) {
 
-        x *= a_Rhs;
-        y *= a_Rhs;
+        vec2 <T> result(*this);
+        return  result *= _num;
+
+    };
+
+    /** Division de un vector entre un número
+    */
+    vec2& operator/=(T _num) {
+        x /= _num;
+        y /= _num;
         return *this;
     };
 
-    /** Operacion de division
+    /** Operacion de Multiplicacion
     */
-    inline vec2& operator/=(T a_Rhs) {
+    vec2<T>  operator*(T _num) {
 
-        x *= (1 / a_Rhs);
-        y *= (1 / a_Rhs);
+        vec2 <T> result(*this);
+        return  result /= _num;
+
+    };
+
+    /** Operacion de comparacion
+    */
+    bool operator==(const vec2<T>& vec2) {
+        return (*this.x == vec2.x && *this.y == vec2.y);
+    };
+
+    /** Operacion de distinto de
+    */
+    bool operator!=(const vec2<T>& vec2) {
+        return (*this.x != vec2.x || *this.y != vec2.y);
+    };
+
+    /** Operador corchetes constante
+    */
+    const T& operator[](size_t a_Index) const {
+
+        return v[a_Index];
+
+    };
+
+    /** Operador corchetes constante
+    */
+    T& operator[](size_t a_Index) {
+
+        return v[a_Index];
+
+    };
+
+    /** Producto escalar de vectores
+    */
+    T producto_escalar(vec2 const& vec2) const {
+
+        return (x * vec2.x + y * vec2.y);
+
+    };
+
+    /** Nomaliza el vector
+    */
+    vec2& normalize() {
+
+        float inv_magnitude = inv_length();
+        x = x * inv_magnitude;
+        y = y * inv_magnitude;
         return *this;
-    };
-
-    /** Operacion de corchetes
-    */
-    inline T operator[](size_t a_Index) const {
-
-        if (a_Index <= 1)
-            return v[a_Index];
-        else
-            throw std::out_of_range("Error with the index " + a_Index);
 
     };
 
-    /** Operacion de corchetes
-    */
-    inline T& operator[](size_t a_Index) {
 
-        if (a_Index <= 1)
-            return v[a_Index];
-        else
-            throw std::out_of_range("Error with the index " + a_Index);
+    /** Inversa de la longitud
+   */
+    vec2& inv_length() {
 
-    };
-
-    /** Operacion de la normal
-    */
-    inline T dot(vec2 const& a_Rhs) const {
-
-        return (x * a_Rhs.x + y * a_Rhs.y);
-
-    };
-
-    /** Nomaliza
-    */
-    inline vec2& normalize() {
-
-        float magnitude = length();
-        x = x / magnitude;
-        y = y / magnitude;
-        return *this;
+        return 1.f / length();
 
     };
 
     /** Longitud del vector
     */
-    inline T length() const {
+    T length() const {
 
         return sqrt((x * x) + (y * y));
 
@@ -127,60 +205,24 @@ public:
 };
 
 
-/** Operacion de suma 
+/** Operacion de Multiplicacion
 */
 template <class T>
-vec2<T> operator+(const vec2<T>& a_Lhs, const vec2<T> a_Rhs) {
-    vec2<T> newVec;
-    newVec.x = a_Lhs.x + a_Rhs.x;
-    newVec.y = a_Lhs.y + a_Rhs.y;
-    return newVec;
-}
+vec2<T>  operator *(T _num, const vec2<T>& _vec) {
 
-/** Operacion de resta
-*/
-template <class T>
-vec2<T>  operator-(const vec2<T>& a_Lhs, const vec2<T>& a_Rhs) {
+    vec2 <T> result(_vec);
+    return  result *= _num;
 
-    vec2<T> newVec;
-    newVec.x = a_Lhs.x + (-1 * a_Rhs.x);
-    newVec.y = a_Lhs.y + (-1 * a_Rhs.y);
-    return newVec;
-
-};
-
-/** Operacion de multiplicacion
-*/
-template <class T>
-vec2<T>  operator*(const vec2<T>& a_Lhs, float a_Rhs) {
-    vec2<T> newVec;
-    newVec.x = a_Lhs.x * a_Rhs;
-    newVec.y = a_Lhs.y * a_Rhs;
-    return newVec;
 };
 
 /** Operacion de division
 */
 template <class T>
-vec2<T>  operator/(const vec2<T>& a_Lhs, float a_Rhs) {
-    vec2<T> newVec;
-    newVec.x = a_Lhs.x * (1 / a_Rhs);
-    newVec.y = a_Lhs.y * (1 / a_Rhs);
-    return newVec;
-};
+vec2<T>  operator/(T _num, const vec2<T>& _vec) {
 
-/** Operacion de comparacion
-*/
-template <class T>
-bool operator==(const vec2<T>& a_Lhs, const vec2<T>& a_Rhs) {
-    return (a_Lhs.x == a_Rhs.x && a_Lhs.y == a_Rhs.y)
-};
+    vec2 <T> result(_vec);
+    return  result /= _num;
 
-/** Operacion de distinto de 
-*/
-template <class T>
-bool operator!=(const vec2<T>& a_Lhs, const vec2<T>& a_Rhs) {
-    return (a_Lhs.x != a_Rhs.x || a_Lhs.y != a_Rhs.y)
 };
 
 /** Clase para almacenar vectores de 3 dimensiones
@@ -209,188 +251,202 @@ public:
 
 public:
 
-    /** Constructor por defecto
+    /** Constructor por defecto (Según el estandar debe estar vacio)
     */
-    inline vec3() {
+    vec3() {
 
         x = z = y = 0;
     };
 
     /** Constructor con parametros
     */
-    inline vec3(T a_X, T a_Y, T a_Z) : x(a_X), y(a_Y), z(a_Z){
+    vec3(T a_X, T a_Y, T a_Z) : x(a_X), y(a_Y), z(a_Z) {
+    };
+
+    /** Constructor con parametros
+    */
+    vec3(const vec3<T>& _a) : x(_a.x), y(_a.y), z(_a.z) {
     };
 
     /** Operador de igualacion
     */
-    inline vec3& operator=(const vec3& rhs) {
+    vec3& operator=(const vec3& vec) {
 
-        x = rhs.x;
-        y = rhs.y;
-        z = rhs.z;
+        x = vec.x;
+        y = vec.y;
+        z = vec.z;
         return *this;
     };
 
     /** Operador de suma
     */
-    inline vec3& operator+=(const vec3& a_Rhs) {
+    vec3& operator+=(const vec3& vec2) {
 
-        x += a_Rhs.x;
-        y += a_Rhs.y;
-        z += a_Rhs.z;
+        x += vec2.x;
+        y += vec2.y;
+        z += vec2.z;
+        return *this;
+    };
+    
+    /** Operador de suma
+    */
+    vec3<T> operator+( const vec3<T>& vec2) {
+        vec3 <T> result(*this);
+        return result += vec2;
+    };
+
+    /** Operador de resta
+    */
+    vec3& operator-=(const vec3& vec2) {
+
+        x += -vec2.x;
+        y += -vec2.y;
+        z += -vec2.z;
         return *this;
     };
 
     /** Operador de resta
     */
-    inline vec3& operator-=(const vec3& a_Rhs) {
-
-        x -= a_Rhs.x;
-        y -= a_Rhs.y;
-        z -= a_Rhs.z;
-        return *this;
+    vec3<T> operator-(const vec3<T>& vec2) {
+        vec3 <T> result(*this);
+        return result -= vec2;
     };
 
     /** Operador de multiplicacion
     */
-    inline vec3& operator*=(T a_Rhs) {
+    vec3& operator*=(T _num) {
 
-        x *= a_Rhs;
-        y *= a_Rhs;
-        z *= a_Rhs;
+        x *= _num;
+        y *= _num;
+        z *= _num;
         return *this;
 
+    };
+
+    /** Operador de multiplicacion
+    */
+    vec3<T> operator*(T _num) {
+        vec3 <T> result(*this);
+        return result *= _num;
     };
 
     /** Operador de division
     */
-    inline vec3& operator/=(T a_Rhs) {
+    vec3& operator/=(T _num) {
 
-        x *= (1 / a_Rhs);
-        y *= (1 / a_Rhs);
-        z *= (1 / a_Rhs);
+        x /= _num;
+        y /= _num;
+        z /= _num;
         return *this;
     };
 
-    /** Operador de corchetes
-    */
-    inline  T operator[](size_t a_Index) const {
 
-        if (a_Index <= 2)
-            return v[a_Index];
-        else
-            throw std::out_of_range("Error with the index " + a_Index);
+    /** Operador de multiplicacion
+    */
+    vec3<T> operator/(T _num) {
+        vec3 <T> result(*this);
+        return result /= _num;
+    };
+
+    /** Operador corchetes constante
+    */
+    T& operator[](size_t a_Index) const {
+
+        return v[a_Index];
 
     };
 
-    /** Operador de corchetes
+    /** Operador corchetes constante
     */
-    inline  T& operator[](size_t a_Index) {
+    T& operator[](size_t a_Index) {
 
-        if (a_Index <= 2)
-            return v[a_Index];
-        else
-            throw std::out_of_range("Error with the index " + a_Index);
+        return v[a_Index];
 
     };
 
-    /** Operacion de dot
+    /** Operador distinto de 
     */
-    inline T dot(vec3 const& a_Rhs) const {
+    bool operator!=(const vec3<T>& vec2) {
+        return (*this.x == vec2.x && *this.y == vec2.y && *this.z == vec2.z);
+    };
+    
+    /** Operador comparador
+    */
+    bool operator==(const vec3<T>& vec2) {
+        return (*this.x == vec2.x && *this.y == vec2.y && *this.z == vec2.z);
+    };
 
-        return (x * a_Rhs.x + y * a_Rhs.y + z * a_Rhs.z);
+    /** Producto escalar de vectores
+    */
+    T producto_escalar(vec3 const& vec2) const {
+
+        return (x * vec2.x + y * vec2.y + z * vec2.z);
 
     };
 
-    /** Operacion de cross
+    /** Operacion de cross. Obtiene el vector perpendicular dados dos vectores
     */
-    inline vec3 cross(vec3 const& a_Rhs) const {
+    vec3 cross(vec3 const& vec2) const {
 
-        return vec3((y * a_Rhs.z) - (z * a_Rhs.y), (z * a_Rhs.x) - (x * a_Rhs.z), (x * a_Rhs.y) - (y * a_Rhs.x));
+        return vec3((y * vec2.z) - (z * vec2.y), (z * vec2.x) - (x * vec2.z), (x * vec2.y) - (y * vec2.x));
 
     };
 
     /** Operacion de normalizacion
     */
-    inline vec3& normalize() {
+    vec3& normalize() {
 
-        float magnitude = length();
-        x = x / magnitude;
-        y = y / magnitude;
-        z = z / magnitude;
+        float inv_magnitude = inv_length();
+        x = x * inv_magnitude;
+        y = y * inv_magnitude;
+        z = z * inv_magnitude;
 
         return *this;
 
     };
 
+    /** Inversa de la longitud del vector
+    */
+    T inv_length() const {
+
+        return sqrt((x * x) + (y * y) + (z * z));
+
+    };
+
     /** Longitud del vector
     */
-    inline T length() const {
+    T length() const {
 
         return sqrt((x * x) + (y * y) + (z * z));
 
     };
 };
 
-/** Operador de suma
+
+/** Operacion de Multiplicacion
 */
 template <class T>
-vec3<T> operator+(const vec3<T>& a_Lhs, const vec3<T>& a_Rhs) {
-    vec3<T> newVec;
-    newVec.x = a_Lhs.x + a_Rhs.x;
-    newVec.y = a_Lhs.y + a_Rhs.y;
-    newVec.z = a_Lhs.z + a_Rhs.z;
-    return newVec;
+vec3<T>  operator *(T _num, const vec3<T>& _vec) {
+
+    vec3 <T> result(_vec);
+    return  result *= _num;
+
 };
 
-/** Operador de resta
+/** Operacion de division
 */
 template <class T>
-vec3<T> operator-(const vec3<T>& a_Lhs, const vec3<T>& a_Rhs) {
-    vec3<T> newVec;
-    newVec.x = a_Lhs.x - a_Rhs.x;
-    newVec.y = a_Lhs.y - a_Rhs.y;
-    newVec.z = a_Lhs.z - a_Rhs.z;
-    return newVec;
+vec3<T>  operator/(T _num, const vec3<T>& _vec) {
+
+    vec3 <T> result(_vec);
+    return  result /= _num;
+
 };
 
-/** Operador de multiplicacion
-*/
-template <class T>
-vec3<T> operator*(const vec3<T>& a_Lhs, float a_Rhs) {
-    vec3<T> newVec;
-    newVec.x = a_Lhs.x * a_Rhs;
-    newVec.y = a_Lhs.y * a_Rhs;
-    newVec.z = a_Lhs.z * a_Rhs;
-    return newVec;
-};
 
-/** Operador de division
+/** Operacion de producto escalar
 */
 template <class T>
-vec3<T> operator/(const vec3<T>& a_Lhs, float a_Rhs) {
-    vec3<T> newVec;
-    newVec.x = a_Lhs.x * (1 / a_Rhs);
-    newVec.y = a_Lhs.y * (1 / a_Rhs);
-    newVec.z = a_Lhs.z * (1 / a_Rhs);
-    return newVec;
-};
-
-/** Operador de comparacion
-*/
-template <class T>
-bool operator==(const vec3<T>& a_Lhs, const vec3<T>& a_Rhs) {
-    return (a_Lhs.x == a_Rhs.x && a_Lhs.y == a_Rhs.y && a_Lhs.z == a_Rhs.z)
-};
-
-/** Operador de distinto de 
-*/
-template <class T>
-bool operator!=(const vec3<T>& a_Lhs, const vec3<T>& a_Rhs) {
-    return (a_Lhs.x == a_Rhs.x && a_Lhs.y == a_Rhs.y && a_Lhs.z == a_Rhs.z)
-};
-
-/** Operacion de Dot
-*/
-template <class T>
-float dot(const vec3<T>& a_Lhs, const vec3<T>& a_Rhs) { return (a_Lhs.x * a_Rhs.x + a_Lhs.y * a_Rhs.y + a_Lhs.z * a_Rhs.z); }
+float producto_escalar(const vec3<T>& vec1, const vec3<T>& vec2) { 
+    return (vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z);
+}
